@@ -8,18 +8,20 @@ const NAMESPACE = "urn:x-cast:com.github.ashutoshgngwr.noice";
 function main(): void {
   const opts = new cast.framework.CastReceiverOptions();
 
-  // disable default idle timeout implementation (only works if cast-media-player
-  // implementation is used.)
+  // disable default idle timeout implementation (only works if
+  // cast-media-player implementation is used.)
   opts.disableIdleTimeout = true;
   opts.customNamespaces = {};
   opts.customNamespaces[NAMESPACE] = cast.framework.system.MessageType.JSON;
 
   const ctx = cast.framework.CastReceiverContext.getInstance();
   const manager = new PlayerManager();
-  const uiHandler = new StatusUIHandler(
-    document.querySelector("#status") ?? document.createElement("div")
-  );
+  const statusContainer = document.querySelector("#status") as HTMLDivElement;
+  if (statusContainer == null) {
+    throw new Error("failed to find the div element with id '#status'");
+  }
 
+  const uiHandler = new StatusUIHandler(statusContainer);
   manager.onStatusUpdate((event: PlayerManagerStatus) => {
     switch (event) {
       case PlayerManagerStatus.Idle:
