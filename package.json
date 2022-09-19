@@ -3,16 +3,15 @@
   "description": "Chromecast custom receiver implementation for casting audio from Noice on Chromecast enabled devices",
   "repository": "git@github.com:trynoice/chromecast-receiver-app.git",
   "author": "Ashutosh Gangwar <ashutoshgngwr@gmail.com>",
-  "license": "MIT",
+  "license": "GPL-3.0-only",
   "private": true,
   "scripts": {
     "dev": "concurrently \"yarn:watch-ts\" \"yarn:serve\"",
     "watch-ts": "tsc --noEmit --watch",
     "serve": "parcel index.html",
-    "build": "parcel build index.html",
+    "build": "parcel build --no-minify index.html",
     "lint": "eslint . --ext .ts",
-    "test:single": "jest --config jest.json",
-    "test": "yarn test:single --watchAll"
+    "test": "jest --config jest.json"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
