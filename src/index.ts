@@ -1,6 +1,6 @@
 import { Event } from "chromecast-caf-receiver/cast.framework.system";
 import PlayerManager from "./player_manager";
-import StatusUIHandler from "./status_ui_handler";
+import StatusUiManager from "./status_ui_manager";
 import { PlayerManagerStatus } from "./types";
 
 const NAMESPACE = "urn:x-cast:com.github.ashutoshgngwr.noice";
@@ -21,26 +21,25 @@ function main(): void {
     throw new Error("failed to find the div element with id '#status'");
   }
 
-  const uiHandler = new StatusUIHandler(statusContainer);
+  const uiManager = new StatusUiManager(statusContainer);
   manager.onStatusUpdate((event: PlayerManagerStatus) => {
     switch (event) {
       case PlayerManagerStatus.Idle:
-        uiHandler.enableStatus(StatusUIHandler.IDLE_STATUS_ID, true);
-        uiHandler.enableStatus(StatusUIHandler.CASTING_STATUS_ID, false);
+        uiManager.enableIdleStatus();
         break;
       case PlayerManagerStatus.IdleTimedOut:
         ctx.stop();
         break;
       default:
-        uiHandler.enableStatus(StatusUIHandler.IDLE_STATUS_ID, false);
-        uiHandler.enableStatus(StatusUIHandler.CASTING_STATUS_ID, true);
+        uiManager.enablePlayingStatus();
         break;
     }
 
-    uiHandler.enableStatus(
-      StatusUIHandler.LOADER_STATUS_ID,
-      event === PlayerManagerStatus.Playing && manager.isBuffering()
-    );
+    if (event === PlayerManagerStatus.Playing && manager.isBuffering()) {
+      uiManager.enableLoaderStatus();
+    } else {
+      uiManager.disableLoaderStatus();
+    }
   });
 
   ctx.addCustomMessageListener(NAMESPACE, (event: Event): void => {
@@ -57,7 +56,7 @@ function main(): void {
   );
 
   // show idle status by default
-  uiHandler.enableStatus(StatusUIHandler.IDLE_STATUS_ID, true);
+  uiManager.enableIdleStatus();
   ctx.start(opts);
 }
 
