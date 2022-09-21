@@ -29,10 +29,11 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
+    gap: 2rem;
 
     #logo svg {
       opacity: 0.95;
-      margin: 0 2rem 0 0;
       max-width: 7rem;
     }
   }
