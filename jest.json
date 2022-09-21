@@ -6,5 +6,6 @@
   "coverageDirectory": "coverage",
   "moduleNameMapper": {
     "^\\./library$": "./library.mock"
-  }
+  },
+  "setupFilesAfterEnv": ["@testing-library/jest-dom/extend-expect"]
 }
