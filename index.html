@@ -3,28 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Noice Chromecast Receiver App</title>
+    <title>Noice Chromecast Receiver</title>
   </head>
 
   <body>
-    <div id="content">
-      <div class="vspacer-5rem"></div>
-      <header>
-        <div id="logo">
-          <svg><use href="./assets/app_icon.svg"></svg>
-        </div>
-        <h1 class="title">
-          Noice
-          <span class="subtitle">Natural calming noise</span>
-        </h1>
-      </header>
-      <div class="vspacer-3rem"></div>
-      <div id="status"></div>
-    </div>
+    Hello, world!
   </body>
   <footer>
     <link rel="stylesheet" href="./scss/main.scss" />
     <script src="//www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"></script>
-    <script src="./src/index.ts"></script>
+    <script type="module" src="./src/app.ts"></script>
   </footer>
 </html>
