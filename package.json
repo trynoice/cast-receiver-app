@@ -14,7 +14,6 @@
     "test": "jest"
   },
   "devDependencies": {
-    "@parcel/transformer-sass": "^2.8.3",
     "@tsconfig/recommended": "^1.0.1",
     "@types/chromecast-caf-receiver": "^6.0.8",
     "@types/jest": "^29.4.0",
