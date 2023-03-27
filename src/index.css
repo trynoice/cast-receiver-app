@@ -74,7 +74,7 @@ body {
 
   display: grid;
   grid-template-columns: auto;
-  justify-content: center;
+  justify-items: center;
 
   gap: 1rem 4rem;
 }
@@ -95,20 +95,26 @@ body {
   min-width: 24rem;
   max-width: 28rem;
   width: 100%;
-  padding: 0.75rem 2rem;
+  padding: 0.75rem 2.5rem;
 
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
 
-  border-radius: 5%/50%;
+  border-radius: 1.75rem/50%;
   background: #093525;
 }
 
 #active-sounds > li > .name {
-  margin-right: 1rem;
+  margin-right: 2rem;
   flex-grow: 1;
-  font-size: 1.25rem;
+  font-size: 1.167rem;
+}
+
+#active-sounds > li > .loader {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 1rem;
 }
 
 #active-sounds > li > .volume-icon {
