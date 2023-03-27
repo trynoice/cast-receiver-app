@@ -6,10 +6,10 @@
   "license": "GPL-3.0-only",
   "private": true,
   "scripts": {
-    "build": "parcel build index.html robots.txt",
+    "build": "parcel build src/index.html src/robots.txt",
     "check": "tsc --noEmit",
     "clean": "rm -rf coverage dist .parcel-cache",
-    "dev": "parcel index.html robots.txt",
+    "dev": "parcel src/index.html src/robots.txt",
     "lint": "eslint . --ext .ts",
     "test": "jest"
   },
