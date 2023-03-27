@@ -6,10 +6,45 @@
     <title>Noice Chromecast Receiver</title>
   </head>
 
-  <body></body>
-  <footer>
-    <link rel="stylesheet" href="index.css" />
+  <body>
+    <div id="logo">
+      <img src="data-url:assets/app-icon.svg" />
+    </div>
+
+    <div id="preset">
+      <img class="icon" src="data-url:assets/stars.svg" />
+      <p class="name">Unsaved Preset</p>
+    </div>
+
+    <ul id="active-sounds">
+      <li id="rain">
+        <span class="name">Rain</span>
+        <img class="volume-icon" src="data-url:assets/volume-up.svg" />
+        <span class="volume">87%</span>
+      </li>
+      <li id="thunder">
+        <span class="name">Thunder</span>
+        <img class="volume-icon" src="data-url:assets/volume-up.svg" />
+        <span class="volume">94%</span>
+      </li>
+    </ul>
+
+    <ul id="state">
+      <div class="icon">
+        <img src="data-url:assets/loader.svg" />
+      </div>
+      <p class="status">Preparing</p>
+    </ul>
+
+    <div id="volume">
+      <img class="icon" src="data-url:assets/volume-up.svg" />
+      <span class="percentage">100%</span>
+    </div>
+
+    <style>
+      @import 'index.css';
+    </style>
     <script src="//www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"></script>
     <script type="module" src="./src/app.ts"></script>
-  </footer>
+  </body>
 </html>
