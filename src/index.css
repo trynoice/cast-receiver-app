@@ -108,19 +108,22 @@ body {
 #state {
   grid-area: state;
   padding: 0;
+  list-style-type: none;
+}
 
+#state > li {
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: 1.5rem;
 }
 
-#state > .icon {
+#state > li > .icon {
   width: 2.75rem;
   height: 2.75rem;
 }
 
-#state > .status {
+#state > li > .status {
   margin: 0;
   font-size: 1.5rem;
 }

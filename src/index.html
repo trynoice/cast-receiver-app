@@ -11,33 +11,41 @@
       <img src="assets/app-icon.svg" />
     </div>
 
-    <div id="preset">
+    <div id="preset" style="display: none">
       <img class="icon" src="assets/stars.svg" />
       <p class="name">Unsaved Preset</p>
     </div>
 
-    <ul id="active-sounds">
-      <li id="rain">
-        <span class="name">Rain</span>
-        <img class="volume-icon" src="assets/volume-up.svg" />
-        <span class="volume">87%</span>
-      </li>
-      <li id="thunder">
-        <span class="name">Thunder</span>
-        <img class="loader" src="assets/loader.svg" />
-        <img class="volume-icon" src="assets/volume-up.svg" />
-        <span class="volume">94%</span>
-      </li>
-    </ul>
+    <ul id="active-sounds" style="display: none"></ul>
 
     <ul id="state">
-      <div class="icon">
-        <img src="assets/loader.svg" />
-      </div>
-      <p class="status">Preparing</p>
+      <li id="loading">
+        <img class="icon" src="assets/loader.svg" />
+        <p class="status">Loading</p>
+      </li>
+      <li id="playing" style="display: none">
+        <img class="icon" src="assets/play-arrow.svg" />
+        <p class="status">Playing</p>
+      </li>
+      <li id="pausing" style="display: none">
+        <img class="icon" src="assets/pause.svg" />
+        <p class="status">Pausing</p>
+      </li>
+      <li id="paused" style="display: none">
+        <img class="icon" src="assets/pause.svg" />
+        <p class="status">Paused</p>
+      </li>
+      <li id="stopping" style="display: none">
+        <img class="icon" src="assets/stop.svg" />
+        <p class="status">Stopping</p>
+      </li>
+      <li id="stopped" style="display: none">
+        <img class="icon" src="assets/stop.svg" />
+        <p class="status">Idle</p>
+      </li>
     </ul>
 
-    <div id="volume">
+    <div id="volume" style="display: none">
       <img class="icon" src="assets/volume-up.svg" />
       <span class="percentage">100%</span>
     </div>
