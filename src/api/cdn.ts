@@ -1,5 +1,5 @@
 import type { CdnClient } from '@trynoice/january';
-import type { CastReceiverContext } from 'chromecast-caf-receiver/cast.framework';
+import { Mutex } from 'async-mutex';
 
 const CDN_ENDPOINT =
   process.env.NODE_ENV === 'production'
@@ -132,14 +132,12 @@ export async function getSound(soundId: string): Promise<Sound | undefined> {
 }
 
 export class JanuaryCdnClient implements CdnClient {
-  private readonly context: CastReceiverContext;
-  private readonly authNamespace: string;
-  private accessTokenRequestTimeout?: ReturnType<typeof setTimeout>;
+  private readonly accessTokenRefresher: AccessTokenRefresher;
+  private readonly accessTokenRefresherMutex = new Mutex();
   private accessToken?: string;
 
-  public constructor(context: CastReceiverContext, authNamespace: string) {
-    this.context = context;
-    this.authNamespace = authNamespace;
+  public constructor(refresher: AccessTokenRefresher) {
+    this.accessTokenRefresher = refresher;
   }
 
   public async getResource(path: string): Promise<Response> {
@@ -148,7 +146,15 @@ export class JanuaryCdnClient implements CdnClient {
       return response;
     }
 
-    await this.refreshAccessToken();
+    const oldAccessToken = this.accessToken;
+    await this.accessTokenRefresherMutex.runExclusive(async () => {
+      if (this.accessToken !== oldAccessToken) {
+        return;
+      }
+
+      this.accessToken = await this.accessTokenRefresher();
+    });
+
     return this.tryResource(path);
   }
 
@@ -157,35 +163,6 @@ export class JanuaryCdnClient implements CdnClient {
       headers: { Authorization: `Bearer ${this.accessToken}` },
     });
   }
-
-  private refreshAccessToken(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      const listener: SystemEventHandler = (event) => {
-        clearTimeout(this.accessTokenRequestTimeout);
-        this.context.removeCustomMessageListener(this.authNamespace, listener);
-        const response: AccessTokenResponseEvent | undefined = event.data;
-        if (response == null) {
-          reject(new Response('received AccessTokenResponseEvent was null'));
-        } else {
-          this.accessToken = response.accessToken;
-          resolve();
-        }
-      };
-
-      this.accessTokenRequestTimeout = setTimeout(() => {
-        this.context.removeCustomMessageListener(this.authNamespace, listener);
-        reject(new Error('timed out while waiting for the new access token'));
-      }, 15000);
-
-      this.context.addCustomMessageListener(this.authNamespace, listener);
-      this.context.sendCustomMessage(this.authNamespace, undefined, {
-        kind: 'AccessTokenRequest',
-      });
-    });
-  }
 }
 
-interface AccessTokenResponseEvent {
-  kind: 'AccessTokenResponse';
-  accessToken?: string;
-}
+export type AccessTokenRefresher = () => Promise<string | undefined>;

@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@trynoice/january": "github:trynoice/january#main",
+    "async-mutex": "^0.4.0",
     "normalize.css": "^8.0.1"
   },
   "browserslist": [
