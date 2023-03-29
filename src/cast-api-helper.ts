@@ -5,8 +5,14 @@ const NS_UI_STATE = 'urn:x-cast:com.github.ashutoshgngwr.noice:ui-state';
 const NS_SOUND_CONTROLLER =
   'urn:x-cast:com.github.ashutoshgngwr.noice:sound-controller';
 
-export default class CastApiHelper {
+export class CastApiHelper {
   private readonly context = cast.framework.CastReceiverContext.getInstance();
+
+  public constructor(handler: SoundCommandHandler) {
+    this.context.addCustomMessageListener(NS_SOUND_CONTROLLER, (event) =>
+      handler.call(undefined, event.data)
+    );
+  }
 
   public start(): Promise<void> {
     const namespaces: { [key: string]: MessageType } = {};
@@ -18,6 +24,7 @@ export default class CastApiHelper {
     options.customNamespaces = namespaces;
     options.disableIdleTimeout = true;
     options.skipPlayersLoad = true;
+
     return new Promise((resolve) => {
       const l: SystemEventHandler = () => {
         this.context.removeEventListener(
@@ -29,8 +36,12 @@ export default class CastApiHelper {
       };
 
       this.context.addEventListener(cast.framework.system.EventType.READY, l);
-      this.context.start();
+      this.context.start(options);
     });
+  }
+
+  public stop() {
+    this.context.stop();
   }
 
   public isDisplaySupported(): boolean {
@@ -44,11 +55,8 @@ export default class CastApiHelper {
       const listener: SystemEventHandler = (event) => {
         clearTimeout(timeout);
         this.context.removeCustomMessageListener(NS_AUTH, listener);
-        const response: AccessTokenResponseEvent | undefined = event.data;
-        if (response == null) {
-          reject(new Response('received AccessTokenResponseEvent was null'));
-        } else {
-          resolve(response.accessToken);
+        if (event.data?.kind === 'AccessTokenResponse') {
+          resolve(event.data.accessToken);
         }
       };
 
@@ -63,9 +71,15 @@ export default class CastApiHelper {
       });
     });
   }
+
+  public sendSoundStateChangeEvent(soundId: string, state: string) {
+    this.context.sendCustomMessage(NS_SOUND_CONTROLLER, undefined, {
+      kind: 'SoundStateChange',
+      soundId: soundId,
+      state: state,
+    });
+  }
 }
 
-interface AccessTokenResponseEvent {
-  kind: 'AccessTokenResponse';
-  accessToken?: string;
-}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type SoundCommandHandler = (command?: any) => void;
