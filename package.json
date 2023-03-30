@@ -34,8 +34,6 @@
     "normalize.css": "^8.0.1"
   },
   "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
+    "Chrome >=60"
   ]
 }
