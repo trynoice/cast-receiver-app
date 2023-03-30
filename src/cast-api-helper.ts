@@ -8,9 +8,16 @@ const NS_SOUND_CONTROLLER =
 export class CastApiHelper {
   private readonly context = cast.framework.CastReceiverContext.getInstance();
 
-  public constructor(handler: SoundCommandHandler) {
+  public constructor(
+    soundCommandHandler: SoundCommandHandler,
+    uiUpdateCommandHandler: UiUpdateCommandHandler
+  ) {
     this.context.addCustomMessageListener(NS_SOUND_CONTROLLER, (event) =>
-      handler.call(undefined, event.data)
+      soundCommandHandler.call(undefined, event.data)
+    );
+
+    this.context.addCustomMessageListener(NS_UI_STATE, (event) =>
+      uiUpdateCommandHandler.call(undefined, event.data)
     );
   }
 
@@ -83,3 +90,6 @@ export class CastApiHelper {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type SoundCommandHandler = (command?: any) => void;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type UiUpdateCommandHandler = (command?: any) => void;

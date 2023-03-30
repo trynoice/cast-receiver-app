@@ -13,8 +13,9 @@ function main() {
 class App {
   private static readonly IDLE_TIMEOUT_MILLIS = 5 * 60 * 1000;
 
-  private readonly castApiHelper = new CastApiHelper((command) =>
-    this.onSoundControllerCommand(command)
+  private readonly castApiHelper = new CastApiHelper(
+    (command) => this.onSoundCommand(command),
+    (command) => this.onUiUpdateCommand(command)
   );
 
   private readonly soundPlayerManager = new SoundPlayerManager(
@@ -51,48 +52,59 @@ class App {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private onSoundControllerCommand(event?: any) {
-    switch (event?.kind) {
+  private onSoundCommand(command?: any) {
+    switch (command?.kind) {
       case 'SoundFadeInDurationUpdateCommand':
         this.soundPlayerManager.setSoundFadeInDurationMillis(
-          event.soundId,
-          event.durationMillis
+          command.soundId,
+          command.durationMillis
         );
         break;
       case 'SoundFadeOutDurationUpdateCommand':
         this.soundPlayerManager.setSoundFadeOutDurationMillis(
-          event.soundId,
-          event.durationMillis
+          command.soundId,
+          command.durationMillis
         );
         break;
       case 'SoundPremiumSegmentsEnableCommand':
         this.soundPlayerManager.setSoundPremiumSegmentsEnabled(
-          event.soundId,
-          event.isEnabled
+          command.soundId,
+          command.isEnabled
         );
         break;
       case 'SoundAudioBitrateUpdateCommand':
         this.soundPlayerManager.setSoundAudioBitrate(
-          event.soundId,
-          event.bitrate
+          command.soundId,
+          command.bitrate
         );
         break;
       case 'SoundPlayCommand':
-        this.soundPlayerManager.playSound(event.soundId);
+        this.soundPlayerManager.playSound(command.soundId);
         break;
       case 'SoundPauseCommand':
-        this.soundPlayerManager.pauseSound(event.soundId, event.immediate);
+        this.soundPlayerManager.pauseSound(command.soundId, command.immediate);
         break;
       case 'SoundStopCommand':
-        this.soundPlayerManager.stopSound(event.soundId, event.immediate);
+        this.soundPlayerManager.stopSound(command.soundId, command.immediate);
         break;
       default:
-        throw new Error(`unrecognised command kind '${event?.kind}'`);
+        throw new Error(`unrecognised command kind '${command?.kind}'`);
     }
   }
 
-  private onUiStateUpdateEvent(event: unknown) {
-    // TODO
-    console.log(event);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private onUiUpdateCommand(command?: any) {
+    switch (command?.kind) {
+      case 'SoundPlayerManagerUpdate':
+        this.uiManager.setState(command.state);
+        this.uiManager.setVolume(command.volume);
+        break;
+      case 'SoundPlayerUpdate':
+        this.uiManager.setSoundState(
+          command.soundId,
+          command.state,
+          command.volume
+        );
+    }
   }
 }
