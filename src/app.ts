@@ -29,10 +29,7 @@ class App {
     this.soundPlayerManager.setSoundStateListener((soundId, state) => {
       this.castApiHelper.sendSoundStateChangeEvent(soundId, state);
       if (this.soundPlayerManager.isIdle()) {
-        this.idleTimeout = setTimeout(
-          () => this.stop(),
-          App.IDLE_TIMEOUT_MILLIS
-        );
+        this.setIdleTimeout();
       } else {
         clearTimeout(this.idleTimeout);
       }
@@ -41,12 +38,16 @@ class App {
     await this.castApiHelper.start();
     this.uiManager.setEnabled(this.castApiHelper.isDisplaySupported());
     this.uiManager.setState('stopped');
+    this.setIdleTimeout();
   }
 
-  private stop() {
-    this.soundPlayerManager.setSoundStateListener(null);
-    this.soundPlayerManager.stop();
-    this.castApiHelper.stop();
+  private setIdleTimeout() {
+    clearTimeout(this.idleTimeout);
+    this.idleTimeout = setTimeout(() => {
+      this.soundPlayerManager.setSoundStateListener(null);
+      this.soundPlayerManager.stop();
+      this.castApiHelper.stop();
+    }, App.IDLE_TIMEOUT_MILLIS);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
