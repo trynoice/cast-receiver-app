@@ -21,7 +21,7 @@ body {
   min-height: 100vh;
   max-height: 100vh;
   overflow: hidden;
-  padding: 4rem 8rem;
+  padding: 4rem 8rem 2rem;
 
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -45,12 +45,11 @@ body {
 
 #preset {
   grid-area: preset;
-  justify-self: flex-end;
+  justify-self: end;
 
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 1rem;
 
   padding: 1rem 4rem 1rem 3rem;
   background: var(--color-primary);
@@ -60,29 +59,29 @@ body {
 #preset > .icon {
   width: 3rem;
   height: 3rem;
+  margin-right: 1rem;
 }
 
 #preset > .name {
-  margin: 0;
   font-size: 1.75rem;
 }
 
 #active-sounds {
   grid-area: sounds;
+  margin: 0;
   padding: 0;
   list-style-type: none;
 
   display: flex;
   flex-flow: wrap;
-  gap: 1.5rem 2rem;
 }
 
 #active-sounds > li {
+  margin: 0.75rem 1rem;
   padding: 0.75rem 2.5rem;
 
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 0.25rem;
 
   border-radius: 1.75rem/50%;
   background: #093525;
@@ -95,18 +94,20 @@ body {
 }
 
 #active-sounds > li > .loader {
-  width: 1.25rem;
-  height: 1.25rem;
-  margin-right: 1rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.75rem;
 }
 
 #active-sounds > li > .volume-icon {
   width: 1.5rem;
   height: 1.5rem;
+  margin-right: 0.25rem;
 }
 
 #state {
   grid-area: state;
+  margin: 0;
   padding: 0;
   list-style-type: none;
 }
@@ -115,27 +116,26 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 1.5rem;
 }
 
 #state > li > .icon {
-  width: 2.75rem;
-  height: 2.75rem;
+  width: 3rem;
+  height: 3rem;
+  margin-right: 1rem;
 }
 
 #state > li > .status {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 1.75rem;
 }
 
 #volume {
   grid-area: volume;
-  justify-self: flex-end;
+  justify-self: end;
 
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 0.75rem;
 
   font-size: 1.25rem;
 }
@@ -143,4 +143,5 @@ body {
 #volume > .icon {
   width: 2.25rem;
   height: 2.25rem;
+  margin-right: 0.75rem;
 }

@@ -18,10 +18,20 @@ export default class UiManager {
   public setState(
     state: 'loading' | 'playing' | 'pausing' | 'paused' | 'stopping' | 'stopped'
   ) {
-    const v = state === 'loading' ? 'hidden' : 'visible';
-    setVisibility(requireElement(document, '#preset'), v);
-    setVisibility(requireElement(document, '#volume'), v);
-    setVisibility(requireElement(document, '#active-sounds'), v);
+    setVisibility(
+      requireElement(document, '#preset'),
+      state === 'loading' || state === 'stopped' ? 'hidden' : 'visible'
+    );
+
+    setVisibility(
+      requireElement(document, '#volume'),
+      state === 'loading' ? 'hidden' : 'visible'
+    );
+
+    setVisibility(
+      requireElement(document, '#active-sounds'),
+      state === 'loading' ? 'hidden' : 'visible'
+    );
 
     document
       .querySelectorAll<HTMLElement>(`#state > li`)
@@ -61,7 +71,7 @@ export default class UiManager {
       }
 
       requireElement(document, '#active-sounds').appendChild(
-        requireElement(t, `#${soundId}`)
+        t.content.firstChild
       );
 
       getSound(soundId).then((sound) => {
