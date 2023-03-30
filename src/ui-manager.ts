@@ -10,7 +10,7 @@ export default class UiManager {
     );
   }
 
-  public setPresetName(name?: string) {
+  public setPresetName(name?: string | null) {
     name = name ?? 'Unsaved Preset';
     requireElement(document, '#preset > .name').innerHTML = name;
   }

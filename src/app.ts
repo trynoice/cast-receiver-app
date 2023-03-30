@@ -14,8 +14,8 @@ class App {
   private static readonly IDLE_TIMEOUT_MILLIS = 5 * 60 * 1000;
 
   private readonly castApiHelper = new CastApiHelper(
-    (command) => this.onSoundCommand(command),
-    (command) => this.onUiUpdateCommand(command)
+    (event) => this.onSoundControlEvent(event),
+    (event) => this.onUiUpdateEvent(event)
   );
 
   private readonly soundPlayerManager = new SoundPlayerManager(
@@ -28,7 +28,7 @@ class App {
   public async start() {
     this.uiManager.setState('loading');
     this.soundPlayerManager.setSoundStateListener((soundId, state) => {
-      this.castApiHelper.sendSoundStateChangeEvent(soundId, state);
+      this.castApiHelper.sendSoundStateChangedEvent(soundId, state);
       if (this.soundPlayerManager.isIdle()) {
         this.setIdleTimeout();
       } else {
@@ -52,59 +52,64 @@ class App {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private onSoundCommand(command?: any) {
-    switch (command?.kind) {
-      case 'SoundFadeInDurationUpdateCommand':
+  private onSoundControlEvent(event?: any) {
+    switch (event?.kind) {
+      case 'SetSoundFadeInDuration':
         this.soundPlayerManager.setSoundFadeInDurationMillis(
-          command.soundId,
-          command.durationMillis
+          event.soundId,
+          event.durationMillis
         );
         break;
-      case 'SoundFadeOutDurationUpdateCommand':
+      case 'SetSoundFadeOutDuration':
         this.soundPlayerManager.setSoundFadeOutDurationMillis(
-          command.soundId,
-          command.durationMillis
+          event.soundId,
+          event.durationMillis
         );
         break;
-      case 'SoundPremiumSegmentsEnableCommand':
+      case 'EnableSoundPremiumSegments':
         this.soundPlayerManager.setSoundPremiumSegmentsEnabled(
-          command.soundId,
-          command.isEnabled
+          event.soundId,
+          event.isEnabled
         );
         break;
-      case 'SoundAudioBitrateUpdateCommand':
+      case 'SetSoundAudioBitrate':
         this.soundPlayerManager.setSoundAudioBitrate(
-          command.soundId,
-          command.bitrate
+          event.soundId,
+          event.bitrate
         );
         break;
-      case 'SoundPlayCommand':
-        this.soundPlayerManager.playSound(command.soundId);
+      case 'SetSoundVolume':
+        this.soundPlayerManager.setSoundVolume(event.soundId, event.volume);
         break;
-      case 'SoundPauseCommand':
-        this.soundPlayerManager.pauseSound(command.soundId, command.immediate);
+      case 'PlaySound':
+        this.soundPlayerManager.playSound(event.soundId);
         break;
-      case 'SoundStopCommand':
-        this.soundPlayerManager.stopSound(command.soundId, command.immediate);
+      case 'PauseSound':
+        this.soundPlayerManager.pauseSound(event.soundId, event.immediate);
+        break;
+      case 'StopSound':
+        this.soundPlayerManager.stopSound(event.soundId, event.immediate);
         break;
       default:
-        throw new Error(`unrecognised command kind '${command?.kind}'`);
+        throw new Error(`unknown sound control event kind '${event?.kind}'`);
     }
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private onUiUpdateCommand(command?: any) {
-    switch (command?.kind) {
-      case 'SoundPlayerManagerUpdate':
-        this.uiManager.setState(command.state);
-        this.uiManager.setVolume(command.volume);
+  private onUiUpdateEvent(event?: any) {
+    switch (event?.kind) {
+      case 'GlobalUiUpdated':
+        this.uiManager.setState(event.state);
+        this.uiManager.setVolume(event.volume);
         break;
-      case 'SoundPlayerUpdate':
-        this.uiManager.setSoundState(
-          command.soundId,
-          command.state,
-          command.volume
-        );
+      case 'SoundUiUpdated':
+        this.uiManager.setSoundState(event.soundId, event.state, event.volume);
+        break;
+      case 'PresetNameUpdated':
+        this.uiManager.setPresetName(event.name);
+        break;
+      default:
+        throw new Error(`unknown ui update event kind '${event?.kind}'`);
     }
   }
 }

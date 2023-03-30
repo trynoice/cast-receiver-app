@@ -59,11 +59,12 @@ export class SoundPlayerManager {
       const p = new SoundPlayer(this.cdnClient, soundId);
       const l = () => {
         const s = p.getState();
-        this.soundStateListenerCallback?.call(undefined, soundId, s);
         if (s === SoundPlayerState.Stopped) {
           p.removeEventListener(SoundPlayer.EVENT_STATE_CHANGE, l);
           this.soundPlayers.delete(soundId);
         }
+
+        this.soundStateListenerCallback?.call(undefined, soundId, s);
       };
 
       p.addEventListener(SoundPlayer.EVENT_STATE_CHANGE, l);
