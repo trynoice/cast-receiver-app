@@ -1,20 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg"
   fill="transparent"
   stroke="#fdfdf8"
-  viewBox="0 0 38 38">
-  <g stroke-width="2"
-    transform="matrix(.78947 0 0 .78947 4.79 4.79)">
-    <circle cx="18"
-      cy="18"
-      r="18"
-      stroke-opacity=".5"/>
-    <path d="M36 18c0-9.94-8.06-18-18-18">
-      <animateTransform attributeName="transform"
-        dur="1s"
-        from="0 18 18"
-        repeatCount="indefinite"
-        to="360 18 18"
-        type="rotate"/>
-    </path>
-  </g>
+  stroke-width="2"
+  viewBox="0 0 48 48">
+  <circle cx="24"
+    cy="24"
+    r="20"
+    stroke-opacity=".33"/>
+  <path d="M44 24c0-9.94-8.06-20-20-20" />
 </svg>

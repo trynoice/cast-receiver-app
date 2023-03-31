@@ -5,10 +5,6 @@
 }
 
 :root {
-  --color-black: #1d1d08;
-  --color-white: #fdfdf8;
-  --color-primary: #1eb980;
-
   font-size: 16px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -21,20 +17,20 @@ body {
   min-height: 100vh;
   max-height: 100vh;
   overflow: hidden;
-  padding: 4rem 8rem 2rem;
+  padding: 4rem 6rem 3rem;
 
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 4fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 5fr 1fr;
   grid-template-areas:
-    'logo preset'
-    'sounds sounds'
-    'state volume';
+    'logo preset preset'
+    'sounds sounds sounds'
+    'state . volume';
   gap: 4rem;
   align-items: center;
 
-  background: var(--color-black);
-  color: var(--color-white);
+  background: #1d1d08;
+  color: #fdfdf8;
   font-size: 1rem;
 }
 
@@ -52,7 +48,7 @@ body {
   align-items: center;
 
   padding: 1rem 4rem 1rem 3rem;
-  background: var(--color-primary);
+  background: #1eb980;
   border-radius: 15px 50px 30px;
 }
 
@@ -63,7 +59,7 @@ body {
 }
 
 #preset > .name {
-  font-size: 1.75rem;
+  font-size: 1.5rem;
 }
 
 #active-sounds {
@@ -77,20 +73,20 @@ body {
 }
 
 #active-sounds > li {
-  margin: 0.75rem 1rem;
-  padding: 0.75rem 2.5rem;
+  margin: 0.75rem;
+  padding: 0.5rem 1.75rem;
 
   display: flex;
   align-items: center;
 
-  border-radius: 1.75rem/50%;
+  border-radius: 1.25rem/50%;
   background: #093525;
 }
 
 #active-sounds > li > .name {
-  margin-right: 2rem;
+  margin-right: 1.75rem;
   flex-grow: 1;
-  font-size: 1.167rem;
+  font-size: 1.125rem;
 }
 
 #active-sounds > li > .loader {
