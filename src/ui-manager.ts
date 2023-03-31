@@ -1,6 +1,6 @@
 import { getSound } from './api/cdn';
-import HourglassIcon from './assets/hourglass.svg';
-import VolumeUpIcon from './assets/volume-up.svg';
+import HourglassIcon from 'data-url:./assets/hourglass.svg';
+import VolumeUpIcon from 'data-url:./assets/volume-up.svg';
 
 export default class UiManager {
   public setEnabled(enabled: boolean) {
