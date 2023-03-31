@@ -15,7 +15,8 @@ class App {
 
   private readonly castApiHelper = new CastApiHelper(
     (event) => this.onSoundControlEvent(event),
-    (event) => this.onUiUpdateEvent(event)
+    (event) => this.onUiUpdateEvent(event),
+    () => this.stop()
   );
 
   private readonly soundPlayerManager = new SoundPlayerManager(
@@ -44,11 +45,13 @@ class App {
 
   private setIdleTimeout() {
     clearTimeout(this.idleTimeout);
-    this.idleTimeout = setTimeout(() => {
-      this.soundPlayerManager.setSoundStateListener(null);
-      this.soundPlayerManager.stop();
-      this.castApiHelper.stop();
-    }, App.IDLE_TIMEOUT_MILLIS);
+    this.idleTimeout = setTimeout(() => this.stop(), App.IDLE_TIMEOUT_MILLIS);
+  }
+
+  private stop() {
+    this.soundPlayerManager.setSoundStateListener(null);
+    this.soundPlayerManager.stop();
+    this.castApiHelper.stop();
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

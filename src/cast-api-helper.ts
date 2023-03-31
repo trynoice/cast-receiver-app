@@ -9,7 +9,8 @@ export class CastApiHelper {
 
   public constructor(
     soundControlEventHandler: SoundControlEventHandler,
-    uiUpdateEventHandler: UiUpdateEventHandler
+    uiUpdateEventHandler: UiUpdateEventHandler,
+    senderDisconnectedEventHandler: SenderDisconnectedEventHandler
   ) {
     this.context.addCustomMessageListener(NS_SOUNDS, (event) =>
       soundControlEventHandler.call(undefined, event.data)
@@ -18,8 +19,13 @@ export class CastApiHelper {
     this.context.addCustomMessageListener(NS_UI_UPDATES, (event) =>
       uiUpdateEventHandler.call(undefined, event.data)
     );
-  }
 
+    this.context.addEventListener(
+      cast.framework.system.EventType.SENDER_DISCONNECTED,
+      () => senderDisconnectedEventHandler.call(undefined)
+    );
+  }
+  O;
   public start(): Promise<void> {
     const namespaces: { [key: string]: MessageType } = {};
     namespaces[NS_AUTH] = cast.framework.system.MessageType.JSON;
@@ -92,3 +98,5 @@ export type SoundControlEventHandler = (event?: any) => void;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type UiUpdateEventHandler = (event?: any) => void;
+
+export type SenderDisconnectedEventHandler = () => void;
