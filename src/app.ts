@@ -8,24 +8,6 @@ window.addEventListener('DOMContentLoaded', main);
 function main() {
   const app = new App();
   app.start();
-
-  // SVG animations are hogging down CPU on Chromecast devices. With JS, the
-  // animation is still jittery, but the overall app performance seemingly
-  // improves.
-  let rotationDeg = 0;
-  let then = Date.now();
-  const ticker = () => {
-    const now = Date.now();
-    rotationDeg = (rotationDeg + (now - then) * 0.36) % 360;
-    then = now;
-    document.querySelectorAll<HTMLImageElement>('.loader').forEach((e) => {
-      e.style.transform = `rotate(${rotationDeg}deg)`;
-    });
-
-    requestAnimationFrame(ticker);
-  };
-
-  requestAnimationFrame(ticker);
 }
 
 class App {

@@ -1,5 +1,5 @@
 import { getSound } from './api/cdn';
-import LoaderIcon from './assets/loader.svg';
+import HourglassIcon from './assets/hourglass.svg';
 import VolumeUpIcon from './assets/volume-up.svg';
 
 export default class UiManager {
@@ -60,7 +60,7 @@ export default class UiManager {
       t.innerHTML = `
       <li id="${soundId}">
         <span class="name"></span>
-        <img class="loader" src="${LoaderIcon}" style="display: none" />
+        <img class="loader" src="${HourglassIcon}" style="display: none" />
         <img class="volume-icon" src="${VolumeUpIcon}" />
         <span class="volume"></span>
       </li>
