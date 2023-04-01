@@ -1,0 +1,144 @@
+@import 'npm:normalize.css/normalize';
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  font-size: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+}
+
+body {
+  min-width: 100vw;
+  max-width: 100vw;
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  padding: 4rem 6rem 3rem;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: max-content 1fr max-content;
+  grid-template-areas:
+    'logo preset preset'
+    'sounds sounds sounds'
+    'state . volume';
+  gap: 4rem;
+  align-items: center;
+
+  background: #1d1d08;
+  color: #fdfdf8;
+  font-size: 1rem;
+}
+
+#logo {
+  grid-area: logo;
+  max-width: 16rem;
+  align-self: flex-start;
+}
+
+#preset {
+  grid-area: preset;
+  justify-self: end;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  padding: 1rem 4rem 1rem 3rem;
+  background: #1eb980;
+  border-radius: 15px 50px 30px;
+}
+
+#preset > .icon {
+  width: 3rem;
+  height: 3rem;
+  margin-right: 1rem;
+}
+
+#preset > .name {
+  font-size: 1.5rem;
+}
+
+#active-sounds {
+  grid-area: sounds;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+
+  display: flex;
+  flex-flow: wrap;
+}
+
+#active-sounds > li {
+  margin: 0.75rem;
+  padding: 0.5rem 1.75rem;
+
+  display: flex;
+  align-items: center;
+
+  border-radius: 1.25rem/50%;
+  background: #093525;
+}
+
+#active-sounds > li > .name {
+  margin-right: 1.75rem;
+  flex-grow: 1;
+  font-size: 1.125rem;
+}
+
+#active-sounds > li > .loader {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.75rem;
+}
+
+#active-sounds > li > .volume-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-right: 0.25rem;
+}
+
+#state {
+  grid-area: state;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+#state > li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#state > li > .icon {
+  width: 3rem;
+  height: 3rem;
+  margin-right: 1rem;
+}
+
+#state > li > .status {
+  margin: 0;
+  font-size: 1.75rem;
+}
+
+#volume {
+  grid-area: volume;
+  justify-self: end;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  font-size: 1.25rem;
+}
+
+#volume > .icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  margin-right: 0.75rem;
+}

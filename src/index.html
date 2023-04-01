@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Noice Chromecast Receiver</title>
+  </head>
+
+  <body>
+    <img id="logo" src="data-url:assets/app-icon.svg" />
+
+    <div id="preset" style="display: none">
+      <img class="icon" src="data-url:assets/stars.svg" />
+      <span class="name">Unsaved Preset</span>
+    </div>
+
+    <ul id="active-sounds" style="display: none"></ul>
+
+    <ul id="state">
+      <li id="loading">
+        <img class="icon" src="data-url:assets/hourglass.svg" />
+        <span class="status">Loading</span>
+      </li>
+      <li id="playing" style="display: none">
+        <img class="icon" src="data-url:assets/play-arrow.svg" />
+        <span class="status">Playing</span>
+      </li>
+      <li id="pausing" style="display: none">
+        <img class="icon" src="data-url:assets/pause.svg" />
+        <span class="status">Pausing</span>
+      </li>
+      <li id="paused" style="display: none">
+        <img class="icon" src="data-url:assets/pause.svg" />
+        <span class="status">Paused</span>
+      </li>
+      <li id="stopping" style="display: none">
+        <img class="icon" src="data-url:assets/stop.svg" />
+        <span class="status">Stopping</span>
+      </li>
+      <li id="stopped" style="display: none">
+        <img class="icon" src="data-url:assets/stop.svg" />
+        <span class="status">Idle</span>
+      </li>
+    </ul>
+
+    <div id="volume" style="display: none">
+      <img class="icon" src="data-url:assets/volume-up.svg" />
+      <span class="percentage">100%</span>
+    </div>
+
+    <style>
+      @import 'index.css';
+    </style>
+    <script src="//www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"></script>
+    <script type="module" src="app.ts"></script>
+  </body>
+</html>
