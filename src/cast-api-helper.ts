@@ -65,11 +65,13 @@ export class CastApiHelper {
     return new Promise((resolve, reject) => {
       let timeout: ReturnType<typeof setTimeout> | undefined = undefined;
       const listener: SystemEventHandler = (event) => {
+        if (event.data?.kind !== 'GetAccessTokenResponse') {
+          return;
+        }
+
         clearTimeout(timeout);
         this.context.removeCustomMessageListener(NS_AUTH, listener);
-        if (event.data?.kind === 'GetAccessTokenResponse') {
-          resolve(event.data.accessToken);
-        }
+        resolve(event.data.accessToken);
       };
 
       timeout = setTimeout(() => {
