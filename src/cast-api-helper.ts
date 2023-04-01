@@ -25,7 +25,7 @@ export class CastApiHelper {
       () => senderDisconnectedEventHandler.call(undefined)
     );
   }
-  O;
+
   public start(): Promise<void> {
     const namespaces: { [key: string]: MessageType } = {};
     namespaces[NS_AUTH] = cast.framework.system.MessageType.JSON;
