@@ -14,18 +14,18 @@
     "test": "jest"
   },
   "devDependencies": {
-    "@parcel/optimizer-data-url": "^2.10.0",
-    "@parcel/transformer-inline-string": "^2.10.0",
+    "@parcel/optimizer-data-url": "^2.10.1",
+    "@parcel/transformer-inline-string": "^2.10.1",
     "@tsconfig/recommended": "^1.0.3",
     "@types/chromecast-caf-receiver": "^6.0.11",
     "@types/jest": "^29.5.6",
-    "@typescript-eslint/eslint-plugin": "^6.8.0",
-    "@typescript-eslint/parser": "^6.8.0",
+    "@typescript-eslint/eslint-plugin": "^6.9.0",
+    "@typescript-eslint/parser": "^6.9.0",
     "eslint": "^8.52.0",
     "eslint-config-prettier": "^9.0.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
-    "parcel": "^2.10.0",
+    "parcel": "^2.10.1",
     "prettier": "^3.0.3",
     "ts-jest": "^29.1.1",
     "typescript": "^5.2.2"
